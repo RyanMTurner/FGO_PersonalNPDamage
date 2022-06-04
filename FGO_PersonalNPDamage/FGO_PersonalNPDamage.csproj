@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApiClient\ApiClient.csproj" />
-    <ProjectReference Include="..\GrandOrder\GrandOrder.csproj" />
   </ItemGroup>
 
 </Project>

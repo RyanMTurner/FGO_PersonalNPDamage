@@ -39,7 +39,7 @@ namespace GrandOrder {
         public int treasureDeviceLv1;
 
         public override string ToString() {
-            return $"{svtId} Lv. {lv}, ATK {atk} (includes {adjustAtk * 10} from fous), NP {treasureDeviceLv1}, Skills {skillLv1} {skillLv2} {skillLv3}";
+            return $"Lv. {lv}, ATK {atk} (includes {adjustAtk * 10} from fous), NP {treasureDeviceLv1}, Skills {skillLv1} {skillLv2} {skillLv3}";
         }
     }
 }
