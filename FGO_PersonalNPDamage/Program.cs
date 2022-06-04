@@ -3,10 +3,9 @@
 namespace FGO_PersonalNPDamage {
     class Program {
         static void Main(string[] args) {
-            AtlasClient client = new AtlasClient();
-
             while (true) {
-                string command = Console.ReadLine().ToLower();
+                string input = Console.ReadLine();
+                string command = input.ToLower();
                 if (string.IsNullOrWhiteSpace(command)) {
                     continue;
                 }
@@ -14,6 +13,13 @@ namespace FGO_PersonalNPDamage {
                     break;
                 }
                 string[] commandWords = command.Split(' ');
+                if (commandWords[0] == "loadinventory") {
+                    if (commandWords.Length == 1) {
+                        continue;
+                    }
+
+
+                }
             }
         }
     }

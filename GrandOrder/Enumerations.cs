@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GrandOrder {
+﻿namespace GrandOrder {
     public enum ServantClass {
         saber = 1,
         archer = 2,

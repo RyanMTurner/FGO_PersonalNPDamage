@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GrandOrder {
     public static class ServantExtensions {
@@ -82,10 +81,10 @@ namespace GrandOrder {
 
         public static float ServantNPDamage(ServantInstance instance, ServantDefinition definition, float randomModifier = 1, bool specialEffect = false) {
             var npDamageBoosts = definition.NPDamageBoosts(new int[] { instance.skillLv1, instance.skillLv2, instance.skillLv3 },
-                instance.treasureDeviceLv1, 
+                instance.treasureDeviceLv1,
                 1); //TODO: Overcharge?
 
-            return CardDamage(instance.atk, 
+            return CardDamage(instance.atk,
                 cardDamageValue: definition.noblePhantasms.Last().card.CardDamageValue(),
                 npDamageMultiplier: definition.noblePhantasms.Last().NPDamage(instance.treasureDeviceLv1, 1).Value / 1000f,
                 cardMod: npDamageBoosts.CardUp / 1000f,
