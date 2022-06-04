@@ -59,7 +59,7 @@ namespace FGO_PersonalNPDamage {
                 return;
             }
             using (StreamWriter writer = new StreamWriter(filePath)) {
-                writer.WriteLine("ID\tName\tClass\tRarity\tLevel\tATK\tAttribute\tNPType\tNPHits\tMinNPDamage\tAvgNPDamage\tMaxNPDamage");
+                writer.WriteLine("ID\tName\tClass\tRarity\tLevel\tATK\tAttribute\tNPType\tNPLevel\tNPHits\tMinNPDamage\tAvgNPDamage\tMaxNPDamage");
                 foreach (var definition in servantDefinitions) {
                     ServantInstance instance = null;
                     foreach (var svt in servantInventory) {
@@ -72,7 +72,7 @@ namespace FGO_PersonalNPDamage {
                         continue;
                     }
                     writer.WriteLine($"{definition.collectionNo}\t{definition.name}\t{definition.className}\t{definition.rarity}\t{instance.lv}\t{instance.atk}\t{definition.attribute}\t" +
-                        $"{definition.noblePhantasms.Last().card}\t{(definition.noblePhantasms.Last().Support ? 0 : definition.noblePhantasms.Last().npDistribution.Count)}\t" +
+                        $"{definition.noblePhantasms.Last().card}\t{instance.treasureDeviceLv1}\t{(definition.noblePhantasms.Last().Support ? 0 : definition.noblePhantasms.Last().npDistribution.Count)}\t" +
                         $"{(definition.noblePhantasms.Last().Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 0.9f)):n0}\t" +
                         $"{(definition.noblePhantasms.Last().Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 1)):n0}\t" +
                         $"{(definition.noblePhantasms.Last().Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 1.099f)):n0}");
