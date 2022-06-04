@@ -37,7 +37,8 @@ namespace FGO_PersonalNPDamage {
 
             var npDamageBoosts = servantInfo.Item1.NPDamageBoosts(new int[] { servantInfo.Item2.skillLv1, servantInfo.Item2.skillLv2, servantInfo.Item2.skillLv3 },
                 servantInfo.Item2.treasureDeviceLv1,
-                1); //TODO: Overcharge?
+                1, //TODO: Overcharge?
+                false);
 
             Console.WriteLine($"NP Damage Boosts for {servantInfo.Item1.name} {servantInfo.Item2}:");
             Console.WriteLine(npDamageBoosts);

@@ -91,7 +91,7 @@ namespace GrandOrder {
                 classAtkBonus: definition.className.ClassAtkBonus(),
                 randomModifier: randomModifier,
                 atkMod: npDamageBoosts.ATKUp / 1000f,
-                defMod: npDamageBoosts.DEFDown / 1000f,
+                defMod: -npDamageBoosts.DEFDown / 1000f,
                 powerMod: specialEffect ? npDamageBoosts.SpecialTraitDamage / 1000f : 0,
                 npDamageMod: npDamageBoosts.NPDamageUp / 1000f,
                 superEffectiveModifier: specialEffect ? npDamageBoosts.SuperEffectiveMod / 1000f : 1,

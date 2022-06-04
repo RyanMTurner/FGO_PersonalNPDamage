@@ -100,7 +100,7 @@ namespace GrandOrder {
             return false;
         }
 
-        public NPDamageTrifecta NPDamageBoosts(int[] skillLevels = null, int npLevel = 1, int npOvercharge = 1) {
+        public NPDamageTrifecta NPDamageBoosts(int[] skillLevels = null, int npLevel = 1, int npOvercharge = 1, bool includePassives = true) {
             if (skillLevels == null) {
                 skillLevels = new int[] { 10, 10, 10 };
             }
@@ -179,32 +179,34 @@ namespace GrandOrder {
                 }
             }
 
-            foreach (Skill s in classPassive) {
-                foreach (SkillFunction sf in s.functions) {
-                    foreach (Buff b in sf.buffs) {
-                        switch (b.type) {
-                            case "upAtk":
-                                boosts.ATKUp += sf.svals[0].Value;
-                                break;
-                            case "downDefence":
-                                boosts.DEFDown += sf.svals[0].Value;
-                                break;
-                            case "upCommandall":
-                                foreach (var ck in b.ckSelfIndv) {
-                                    if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                                        boosts.CardUp += sf.svals[0].Value;
+            if (includePassives) {
+                foreach (Skill s in classPassive) {
+                    foreach (SkillFunction sf in s.functions) {
+                        foreach (Buff b in sf.buffs) {
+                            switch (b.type) {
+                                case "upAtk":
+                                    boosts.ATKUp += sf.svals[0].Value;
+                                    break;
+                                case "downDefence":
+                                    boosts.DEFDown += sf.svals[0].Value;
+                                    break;
+                                case "upCommandall":
+                                    foreach (var ck in b.ckSelfIndv) {
+                                        if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
+                                            boosts.CardUp += sf.svals[0].Value;
+                                        }
                                     }
-                                }
-                                break;
-                            case "upNpdamage":
-                                boosts.NPDamageUp += sf.svals[0].Value;
-                                break;
-                            case "upDamage":
-                                boosts.SpecialTraitDamage += sf.svals[0].Value;
-                                break;
-                            case "addDamage":
-                                boosts.Divinity += sf.svals[0].Value;
-                                break;
+                                    break;
+                                case "upNpdamage":
+                                    boosts.NPDamageUp += sf.svals[0].Value;
+                                    break;
+                                case "upDamage":
+                                    boosts.SpecialTraitDamage += sf.svals[0].Value;
+                                    break;
+                                case "addDamage":
+                                    boosts.Divinity += sf.svals[0].Value;
+                                    break;
+                            }
                         }
                     }
                 }
