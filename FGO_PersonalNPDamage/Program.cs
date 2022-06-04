@@ -27,14 +27,29 @@ namespace FGO_PersonalNPDamage {
                         }
                         var task = commandManager.LoadInventory(input.Substring("loadinventory ".Length, input.Length - "loadinventory ".Length));
                         break;
+                    case "npboosts":
+                        if (commandWords.Length == 1) {
+                            continue;
+                        }
+                        if (!int.TryParse(commandWords[1], out int boostCollectionNo)) {
+                            continue;
+                        }
+                        commandManager.NPBoosts(boostCollectionNo);
+                        break;
                     case "npdamage":
                         if (commandWords.Length == 1) {
                             continue;
                         }
-                        if (!int.TryParse(commandWords[1], out int collectionNo)) {
+                        if (!int.TryParse(commandWords[1], out int damageCollectionNo)) {
                             continue;
                         }
-                        commandManager.NPDamage(collectionNo);
+                        commandManager.NPDamage(damageCollectionNo);
+                        break;
+                    case "npdamagechart":
+                        if (commandWords.Length == 1) {
+                            continue;
+                        }
+                        commandManager.NPDamageChart(input.Substring("npdamagechart ".Length, input.Length - "npdamagechart ".Length));
                         break;
                 }
             }
