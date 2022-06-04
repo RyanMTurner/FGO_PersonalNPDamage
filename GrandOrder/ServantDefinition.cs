@@ -114,6 +114,9 @@ namespace GrandOrder {
                 if (!checkedSkills.Contains(skills[i].num - 1)) {
                     checkedSkills.Add(skills[i].num - 1);
                     foreach (SkillFunction sf in skills[i].functions) {
+                        if (!sf.TargetsSelf) {
+                            continue;
+                        }
                         foreach (Buff b in sf.buffs) {
                             switch (b.type) {
                                 case "upAtk":
@@ -152,9 +155,12 @@ namespace GrandOrder {
             }
 
             foreach (NPFunction nf in targetNP.functions) {
+                if (!nf.TargetsSelf) {
+                    continue;
+                }
                 if (nf.funcType.Contains("damageNp")) {
                     if (nf.SkillValueForSituation(npLevel, npOvercharge).Correction != null) {
-                        boosts.SuperEffectiveMod += (int)nf.SkillValueForSituation(npLevel, npOvercharge).Correction;
+                        boosts.SuperEffectiveMod = (int)nf.SkillValueForSituation(npLevel, npOvercharge).Correction;
                     }
                     break;
                 }
@@ -196,6 +202,9 @@ namespace GrandOrder {
             if (includePassives) {
                 foreach (Skill s in classPassive) {
                     foreach (SkillFunction sf in s.functions) {
+                        if (!sf.TargetsSelf) {
+                            continue;
+                        }
                         foreach (Buff b in sf.buffs) {
                             switch (b.type) {
                                 case "upAtk":
@@ -298,6 +307,12 @@ namespace GrandOrder {
         public string funcTargetTeam;
         public List<Buff> buffs;
         public List<SkillValues> svals;
+
+        public bool TargetsSelf {
+            get {
+                return funcTargetType != "ptOther"; //TODO: Get full targeting list
+            }
+        }
     }
 
     public class Buff {
