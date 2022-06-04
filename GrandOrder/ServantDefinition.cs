@@ -129,6 +129,13 @@ namespace GrandOrder {
                                         }
                                     }
                                     break;
+                                case "downDefencecommandall":
+                                    foreach (var ck in b.ckOpIndv) {
+                                        if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
+                                            boosts.CardUp += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
+                                        }
+                                    }
+                                    break;
                                 case "upNpdamage":
                                     boosts.NPDamageUp += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
                                     break;
@@ -161,6 +168,13 @@ namespace GrandOrder {
                             break;
                         case "upCommandall":
                             foreach (var ck in b.ckSelfIndv) {
+                                if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
+                                    boosts.CardUp += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
+                                }
+                            }
+                            break;
+                        case "downDefencecommandall":
+                            foreach (var ck in b.ckOpIndv) {
                                 if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
                                     boosts.CardUp += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
                                 }
@@ -289,6 +303,7 @@ namespace GrandOrder {
     public class Buff {
         public string type;
         public List<RequiredIndividualityToApply> ckSelfIndv;
+        public List<RequiredIndividualityToApply> ckOpIndv;
     }
 
     public class SkillValues {
