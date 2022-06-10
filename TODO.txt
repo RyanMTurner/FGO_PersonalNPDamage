@@ -1,5 +1,9 @@
-https://discord.com/channels/502554574423457812/581357626579746836/982073525240221737
+Tasks:
+-Musashi and Roberts' supereffectivemods aren't considered, see https://discord.com/channels/502554574423457812/581357626579746836/982073525240221737
+-Add NP Targets (AoE, ST, Support) as data on the chart
 
-Musashi and Roberts' supereffectivemods aren't considered
-
-Brave Bathory gets all the benefits of her third skill
+Features:
+-Add trait damage to the chart
+-Add ability to enter specs on a target and calculate all servants' damage against that target
+-Suggest the best supports for a servant, and calculate their maximum potential np damage when assisted by them
+-Allow teambuilding?
