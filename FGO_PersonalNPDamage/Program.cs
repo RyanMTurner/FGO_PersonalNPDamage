@@ -2,10 +2,12 @@
 
 namespace FGO_PersonalNPDamage {
     class Program {
+        static Version Version = new Version(1, 0, 0);
+
         static void Main(string[] args) {
             CommandManager commandManager = new CommandManager();
 
-            Console.WriteLine("FGO NP Damage Calculator by Ryan Turner. I use YOUR servants specifically!");
+            Console.WriteLine($"FGO NP Damage Calculator v{Version} by Ryan Turner. I use YOUR servants specifically!");
 
             while (true) {
                 string input = Console.ReadLine();

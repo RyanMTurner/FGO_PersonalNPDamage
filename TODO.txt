@@ -1,6 +1,7 @@
 Tasks:
 -Musashi and Roberts' supereffectivemods aren't considered, see https://discord.com/channels/502554574423457812/581357626579746836/982073525240221737
 -Add NP Targets (AoE, ST, Support) as data on the chart
+-Add Overcharge levels if the servant can provide it themselves (i.e. Kama)
 
 Features:
 -Add trait damage to the chart
