@@ -121,37 +121,8 @@ namespace GrandOrder {
                             continue;
                         }
                         foreach (Buff b in sf.buffs) {
-                            switch (b.type) {
-                                case "upAtk":
-                                    boosts.ATKUp += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
-                                    break;
-                                case "downDefence":
-                                    boosts.DEFDown += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
-                                    break;
-                                case "upCommandall":
-                                    foreach (var ck in b.ckSelfIndv) {
-                                        if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                                            boosts.CardUp += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
-                                        }
-                                    }
-                                    break;
-                                case "downDefencecommandall":
-                                    foreach (var ck in b.ckOpIndv) {
-                                        if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                                            boosts.CardUp += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
-                                        }
-                                    }
-                                    break;
-                                case "upNpdamage":
-                                    boosts.NPDamageUp += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
-                                    break;
-                                case "upDamage":
-                                    boosts.SpecialTraitDamage += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
-                                    break;
-                                case "addDamage":
-                                    boosts.Divinity += sf.svals[skillLevels[skills[i].num - 1] - 1].Value;
-                                    break;
-                            }
+                            SkillValues sv = sf.svals[skillLevels[skills[i].num - 1] - 1];
+                            boosts.AddBuff(b, sv, targetNP);
                         }
                     }
                 }
@@ -168,37 +139,8 @@ namespace GrandOrder {
                     break;
                 }
                 foreach (Buff b in nf.buffs) {
-                    switch (b.type) {
-                        case "upAtk":
-                            boosts.ATKUp += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
-                            break;
-                        case "downDefence":
-                            boosts.DEFDown += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
-                            break;
-                        case "upCommandall":
-                            foreach (var ck in b.ckSelfIndv) {
-                                if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                                    boosts.CardUp += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
-                                }
-                            }
-                            break;
-                        case "downDefencecommandall":
-                            foreach (var ck in b.ckOpIndv) {
-                                if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                                    boosts.CardUp += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
-                                }
-                            }
-                            break;
-                        case "upNpdamage":
-                            boosts.NPDamageUp += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
-                            break;
-                        case "upDamage":
-                            boosts.SpecialTraitDamage += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
-                            break;
-                        case "addDamage":
-                            boosts.Divinity += nf.SkillValueForSituation(npLevel, npOvercharge).Value;
-                            break;
-                    }
+                    SkillValues sv = nf.SkillValueForSituation(npLevel, npOvercharge);
+                    boosts.AddBuff(b, sv, targetNP);
                 }
             }
 
@@ -209,30 +151,8 @@ namespace GrandOrder {
                             continue;
                         }
                         foreach (Buff b in sf.buffs) {
-                            switch (b.type) {
-                                case "upAtk":
-                                    boosts.ATKUp += sf.svals[0].Value;
-                                    break;
-                                case "downDefence":
-                                    boosts.DEFDown += sf.svals[0].Value;
-                                    break;
-                                case "upCommandall":
-                                    foreach (var ck in b.ckSelfIndv) {
-                                        if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                                            boosts.CardUp += sf.svals[0].Value;
-                                        }
-                                    }
-                                    break;
-                                case "upNpdamage":
-                                    boosts.NPDamageUp += sf.svals[0].Value;
-                                    break;
-                                case "upDamage":
-                                    boosts.SpecialTraitDamage += sf.svals[0].Value;
-                                    break;
-                                case "addDamage":
-                                    boosts.Divinity += sf.svals[0].Value;
-                                    break;
-                            }
+                            SkillValues sv = sf.svals[0];
+                            boosts.AddBuff(b, sv, targetNP);
                         }
                     }
                 }
@@ -327,6 +247,7 @@ namespace GrandOrder {
     public class SkillValues {
         public int Value;
         public int? Correction;
+        public int? ActSetWeight;
     }
 
     public class RequiredIndividualityToApply {
@@ -342,6 +263,40 @@ namespace GrandOrder {
         public int SpecialTraitDamage;
         public int SuperEffectiveMod = 1000;
         public int Divinity;
+
+        public void AddBuff(Buff b, SkillValues sv, NoblePhantasm targetNP) {
+            switch (b.type) {
+                case "upAtk":
+                    ATKUp += sv.Value;
+                    break;
+                case "downDefence":
+                    DEFDown += sv.Value;
+                    break;
+                case "upCommandall":
+                    foreach (var ck in b.ckSelfIndv) {
+                        if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
+                            CardUp += sv.Value;
+                        }
+                    }
+                    break;
+                case "downDefencecommandall":
+                    foreach (var ck in b.ckOpIndv) {
+                        if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
+                            CardUp += sv.Value;
+                        }
+                    }
+                    break;
+                case "upNpdamage":
+                    NPDamageUp += sv.Value;
+                    break;
+                case "upDamage":
+                    SpecialTraitDamage += sv.Value;
+                    break;
+                case "addDamage":
+                    Divinity += sv.Value;
+                    break;
+            }
+        }
 
         public override string ToString() {
             string retVal = string.Empty;
