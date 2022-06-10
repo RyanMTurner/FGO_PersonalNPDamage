@@ -100,7 +100,7 @@ namespace GrandOrder {
             return false;
         }
 
-        public NPDamageTrifecta NPDamageBoosts(int[] skillLevels = null, int npLevel = 1, int npOvercharge = 1, bool includePassives = true) {
+        public NPDamageTrifecta NPDamageBoosts(int[] skillLevels = null, int npLevel = 1, int npOvercharge = 1, bool includePassives = true, int npIndex = -1) {
             if (skillLevels == null) {
                 skillLevels = new int[] { 10, 10, 10 };
             }
@@ -108,6 +108,9 @@ namespace GrandOrder {
             NPDamageTrifecta boosts = new NPDamageTrifecta();
 
             NoblePhantasm targetNP = noblePhantasms.Last();
+            if (npIndex != -1) {
+                targetNP = noblePhantasms[npIndex];
+            }
 
             List<int> checkedSkills = new List<int>();
             for (int i = skills.Count - 1; i >= 0; i--) {

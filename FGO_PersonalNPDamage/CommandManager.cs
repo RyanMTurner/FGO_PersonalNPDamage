@@ -71,11 +71,17 @@ namespace FGO_PersonalNPDamage {
                     if (instance == null) {
                         continue;
                     }
-                    writer.WriteLine($"{definition.collectionNo}\t{definition.name}\t{definition.className}\t{definition.rarity}\t{instance.lv}\t{instance.atk}\t{definition.attribute}\t" +
-                        $"{definition.noblePhantasms.Last().card}\t{instance.treasureDeviceLv1}\t{(definition.noblePhantasms.Last().Support ? 0 : definition.noblePhantasms.Last().npDistribution.Count)}\t" +
-                        $"{(definition.noblePhantasms.Last().Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 0.9f)):n0}\t" +
-                        $"{(definition.noblePhantasms.Last().Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 1)):n0}\t" +
-                        $"{(definition.noblePhantasms.Last().Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 1.099f)):n0}");
+                    List<ServantCardType> cardTypes = new List<ServantCardType>();
+                    for (int i = definition.noblePhantasms.Count - 1; i >= 0; i--) {
+                        if (!cardTypes.Contains(definition.noblePhantasms[i].card)) {
+                            cardTypes.Add(definition.noblePhantasms[i].card);
+                            writer.WriteLine($"{definition.collectionNo}\t{definition.name}\t{definition.className}\t{definition.rarity}\t{instance.lv}\t{instance.atk}\t{definition.attribute}\t" +
+                                $"{definition.noblePhantasms[i].card}\t{instance.treasureDeviceLv1}\t{(definition.noblePhantasms[i].Support ? 0 : definition.noblePhantasms[i].npDistribution.Count)}\t" +
+                                $"{(definition.noblePhantasms[i].Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 0.9f, npIndex: i)):n0}\t" +
+                                $"{(definition.noblePhantasms[i].Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 1, npIndex: i)):n0}\t" +
+                                $"{(definition.noblePhantasms[i].Support ? 0 : ServantExtensions.ServantNPDamage(instance, definition, 1.099f, npIndex: i)):n0}");
+                        }
+                    }
                 }
             }
             Console.WriteLine($"Finished!");

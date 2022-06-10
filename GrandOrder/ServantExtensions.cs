@@ -79,14 +79,19 @@ namespace GrandOrder {
             return (float)Math.Floor(Math.Max(damage, 0));
         }
 
-        public static float ServantNPDamage(ServantInstance instance, ServantDefinition definition, float randomModifier = 1, bool specialEffect = false) {
+        public static float ServantNPDamage(ServantInstance instance, ServantDefinition definition, float randomModifier = 1, bool specialEffect = false, int npIndex = -1) {
+            if (npIndex == -1) {
+                npIndex = definition.noblePhantasms.Count - 1;
+            }
+
             var npDamageBoosts = definition.NPDamageBoosts(new int[] { instance.skillLv1, instance.skillLv2, instance.skillLv3 },
                 instance.treasureDeviceLv1,
-                1); //TODO: Overcharge?
+                1,  //TODO: Overcharge?
+                npIndex: npIndex);
 
             return CardDamage(instance.atk,
-                cardDamageValue: definition.noblePhantasms.Last().card.CardDamageValue(),
-                npDamageMultiplier: definition.noblePhantasms.Last().NPDamage(instance.treasureDeviceLv1, 1).Value / 1000f,
+                cardDamageValue: definition.noblePhantasms[npIndex].card.CardDamageValue(),
+                npDamageMultiplier: definition.noblePhantasms[npIndex].NPDamage(instance.treasureDeviceLv1, 1).Value / 1000f,
                 cardMod: npDamageBoosts.CardUp / 1000f,
                 classAtkBonus: definition.className.ClassAtkBonus(),
                 triangleModifier: definition.className == ServantClass.berserker ? 1.5f : 2f,
