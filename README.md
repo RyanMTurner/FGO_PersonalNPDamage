@@ -19,6 +19,7 @@ Notes About My Chart (it differs from[ Ran's incredible NP Damage Table](https:/
 * Attribute Multiplier NOT included*.
 * Overcharge Stage 1*.
 * Chance-based buffs are assumed to hit.
+* Weighted effects (this-or-that, see [Corday's S3](https://apps.atlasacademy.io/db/JP/servant/259/skill-3)) choose the one which will do the most damage.
 * Damage from DoT effects such as Burn, Curse, and Poison are not included.
 
 *For a look at what else I'm thinknig about, check out my [TODO](TODO.txt).
