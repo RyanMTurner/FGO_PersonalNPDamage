@@ -89,7 +89,7 @@ namespace GrandOrder {
                 1,  //TODO: Overcharge?
                 npIndex: npIndex);
 
-            return CardDamage(instance.atk,
+            float cardDamage = CardDamage(instance.atk,
                 cardDamageValue: definition.noblePhantasms[npIndex].card.CardDamageValue(),
                 npDamageMultiplier: definition.noblePhantasms[npIndex].NPDamage(instance.treasureDeviceLv1, 1).Value / 1000f,
                 cardMod: npDamageBoosts.CardUp / 1000f,
@@ -102,6 +102,29 @@ namespace GrandOrder {
                 npDamageMod: npDamageBoosts.NPDamageUp / 1000f,
                 superEffectiveModifier: specialEffect ? npDamageBoosts.SuperEffectiveMod / 1000f : 1,
                 dmgPlusAdd: npDamageBoosts.Divinity);
+
+            if (npDamageBoosts.WeightedEffects.Count() == 0) {
+                return cardDamage;
+            }
+
+            List<float> potentialDamages = new List<float>();
+            foreach (var weightedEffect in npDamageBoosts.WeightedEffects) {
+                var weightedBoosts = npDamageBoosts.Add(weightedEffect);
+                potentialDamages.Add(CardDamage(instance.atk,
+                    cardDamageValue: definition.noblePhantasms[npIndex].card.CardDamageValue(),
+                    npDamageMultiplier: definition.noblePhantasms[npIndex].NPDamage(instance.treasureDeviceLv1, 1).Value / 1000f,
+                    cardMod: weightedBoosts.CardUp / 1000f,
+                    classAtkBonus: definition.className.ClassAtkBonus(),
+                    triangleModifier: definition.className == ServantClass.berserker || definition.className == ServantClass.alterEgo || definition.className == ServantClass.pretender ? 1.5f : 2f,
+                    randomModifier: randomModifier,
+                    atkMod: weightedBoosts.ATKUp / 1000f,
+                    defMod: -weightedBoosts.DEFDown / 1000f,
+                    powerMod: specialEffect ? weightedBoosts.SpecialTraitDamage / 1000f : 0,
+                    npDamageMod: weightedBoosts.NPDamageUp / 1000f,
+                    superEffectiveModifier: specialEffect ? weightedBoosts.SuperEffectiveMod / 1000f : 1,
+                    dmgPlusAdd: weightedBoosts.Divinity));
+            }
+            return potentialDamages.Max();
         }
     }
 }

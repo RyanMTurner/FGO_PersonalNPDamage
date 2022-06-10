@@ -264,36 +264,86 @@ namespace GrandOrder {
         public int SuperEffectiveMod = 1000;
         public int Divinity;
 
+        List<NPDamageTrifecta> weightedEffects = new List<NPDamageTrifecta>();
+        public IEnumerable<NPDamageTrifecta> WeightedEffects => weightedEffects;
+
+        public NPDamageTrifecta Add(NPDamageTrifecta other) {
+            return new NPDamageTrifecta() {
+                ATKUp = this.ATKUp + other.ATKUp,
+                DEFDown = this.DEFDown + other.DEFDown,
+                CardUp = this.CardUp + other.CardUp,
+                NPDamageUp = this.NPDamageUp + other.NPDamageUp,
+                SpecialTraitDamage = this.SpecialTraitDamage + other.SpecialTraitDamage,
+                SuperEffectiveMod = this.SuperEffectiveMod + other.SuperEffectiveMod - 1,
+                Divinity = this.Divinity + other.Divinity,
+            };
+        }
+
         public void AddBuff(Buff b, SkillValues sv, NoblePhantasm targetNP) {
             switch (b.type) {
                 case "upAtk":
-                    ATKUp += sv.Value;
+                    if (!sv.ActSetWeight.HasValue) {
+                        ATKUp += sv.Value;
+                    }
+                    else {
+                        weightedEffects.Add(new NPDamageTrifecta() { ATKUp = sv.Value });
+                    }
                     break;
                 case "downDefence":
-                    DEFDown += sv.Value;
+                    if (!sv.ActSetWeight.HasValue) {
+                        DEFDown += sv.Value;
+                    }
+                    else {
+                        weightedEffects.Add(new NPDamageTrifecta() { DEFDown = sv.Value });
+                    }
                     break;
                 case "upCommandall":
                     foreach (var ck in b.ckSelfIndv) {
                         if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                            CardUp += sv.Value;
+                            if (!sv.ActSetWeight.HasValue) {
+                                CardUp += sv.Value;
+                            }
+                            else {
+                                weightedEffects.Add(new NPDamageTrifecta() { CardUp = sv.Value });
+                            }
                         }
                     }
                     break;
                 case "downDefencecommandall":
                     foreach (var ck in b.ckOpIndv) {
                         if (ck.name.ToLower().Contains(targetNP.card.ToString().ToLower())) {
-                            CardUp += sv.Value;
+                            if (!sv.ActSetWeight.HasValue) {
+                                CardUp += sv.Value;
+                            }
+                            else {
+                                weightedEffects.Add(new NPDamageTrifecta() { CardUp = sv.Value });
+                            }
                         }
                     }
                     break;
                 case "upNpdamage":
-                    NPDamageUp += sv.Value;
+                    if (!sv.ActSetWeight.HasValue) {
+                        NPDamageUp += sv.Value;
+                    }
+                    else {
+                        weightedEffects.Add(new NPDamageTrifecta() { NPDamageUp = sv.Value });
+                    }
                     break;
                 case "upDamage":
-                    SpecialTraitDamage += sv.Value;
+                    if (!sv.ActSetWeight.HasValue) {
+                        SpecialTraitDamage += sv.Value;
+                    }
+                    else {
+                        weightedEffects.Add(new NPDamageTrifecta() { SpecialTraitDamage = sv.Value });
+                    }
                     break;
                 case "addDamage":
-                    Divinity += sv.Value;
+                    if (!sv.ActSetWeight.HasValue) {
+                        Divinity += sv.Value;
+                    }
+                    else {
+                        weightedEffects.Add(new NPDamageTrifecta() { Divinity = sv.Value });
+                    }
                     break;
             }
         }
