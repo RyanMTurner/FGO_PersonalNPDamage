@@ -87,6 +87,20 @@ namespace FGO_PersonalNPDamage {
             Console.WriteLine($"Finished!");
         }
 
+        public void EventAttendance(string filePath) {
+            if (!RequireDefinitions()) {
+                return;
+            }
+            using (StreamWriter writer = new StreamWriter(filePath)) {
+                writer.WriteLine("ID\tName\tClass\tRarity\tEventsAttended");
+                foreach (var definition in servantDefinitions) {
+                    writer.WriteLine($"{definition.collectionNo}\t{definition.name}\t{definition.className}\t{definition.rarity}\t" +
+                        $"{definition.extraPassive.Where(x => x.extraPassive.Count > 0 && x.extraPassive[0].eventId != 80038).Count()}");
+                }
+            }
+            Console.WriteLine($"Finished!");
+        }
+
         public bool RequireDefinitions() {
             if (servantDefinitions != null) {
                 return true;

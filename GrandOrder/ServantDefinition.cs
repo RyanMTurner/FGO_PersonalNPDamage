@@ -42,7 +42,7 @@ namespace GrandOrder {
         //costumeMaterials
         public List<Skill> skills;
         public List<Skill> classPassive;
-        //extraPassive
+        public List<Skill> extraPassive;
         //appendPassive
         public List<NoblePhantasm> noblePhantasms;
 
@@ -222,6 +222,7 @@ namespace GrandOrder {
         public int num; //what number skill it is; evaluate lists of skills backwards and only count each num once
         public SkillType type;
         public List<SkillFunction> functions;
+        public List<ExtraPassive> extraPassive;
     }
 
     public class SkillFunction {
@@ -253,6 +254,10 @@ namespace GrandOrder {
     public class RequiredIndividualityToApply {
         public int id;
         public string name;
+    }
+
+    public class ExtraPassive {
+        public int eventId;
     }
 
     public class NPDamageTrifecta {

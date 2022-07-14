@@ -10,7 +10,8 @@ namespace GrandOrder {
             9935530,
             9935500,
             9935400,
-            1700100
+            1700100,
+            9943610
         };
 
         public static void RemoveUnplayable(this List<ServantDefinition> servants) {
