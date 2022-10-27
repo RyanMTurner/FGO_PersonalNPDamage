@@ -172,6 +172,7 @@ namespace GrandOrder {
         public List<int> npDistribution;
         public Dictionary<string, List<int>> npGain;
         public List<NPFunction> functions;
+        public List<RequiredIndividualityToApply> individuality;
 
         public bool Support {
             get {
@@ -181,6 +182,29 @@ namespace GrandOrder {
                     }
                 }
                 return true;
+            }
+        }
+
+        public bool AOE {
+            get {
+                foreach (var ind in individuality) {
+                    if (ind.id == 4101) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public string NPType {
+            get {
+                if (Support) {
+                    return "Support";
+                }
+                if (AOE) {
+                    return "AOE";
+                }
+                return "ST";
             }
         }
 
