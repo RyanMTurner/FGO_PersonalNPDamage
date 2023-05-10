@@ -95,7 +95,7 @@ namespace GrandOrder {
                 npDamageMultiplier: definition.noblePhantasms[npIndex].NPDamage(instance.treasureDeviceLv1, 1).Value / 1000f,
                 cardMod: npDamageBoosts.CardUp / 1000f,
                 classAtkBonus: definition.className.ClassAtkBonus(),
-                triangleModifier: definition.className == ServantClass.berserker || definition.className == ServantClass.alterEgo || definition.className == ServantClass.pretender ? 1.5f : 2f,
+                triangleModifier: definition.className == ServantClass.berserker || definition.className == ServantClass.alterEgo || definition.className == ServantClass.pretender || definition.className == ServantClass.beast ? 1.5f : 2f,
                 randomModifier: randomModifier,
                 atkMod: npDamageBoosts.ATKUp / 1000f,
                 defMod: -npDamageBoosts.DEFDown / 1000f,

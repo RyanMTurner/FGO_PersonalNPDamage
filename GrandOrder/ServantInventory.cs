@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GrandOrder {
     public class HTTPSniffResponse {
@@ -11,6 +12,7 @@ namespace GrandOrder {
 
     public class FGOCacheReplace {
         public List<ServantInstance> userSvt;
+        public List<ServantCollectionItem> userSvtCollection;
 
         public ServantInstance GetServantByID(int svtId) {
             if (userSvt == null) {
@@ -19,6 +21,18 @@ namespace GrandOrder {
             foreach (ServantInstance servantInstance in userSvt) {
                 if (servantInstance.svtId == svtId) {
                     return servantInstance;
+                }
+            }
+            return null;
+        }
+
+        public ServantCollectionItem GetServantCollectionItemByID(int svtId) {
+            if (userSvt == null) {
+                return null;
+            }
+            foreach (ServantCollectionItem item in userSvtCollection) {
+                if (item.svtId == svtId) {
+                    return item;
                 }
             }
             return null;
@@ -38,8 +52,22 @@ namespace GrandOrder {
         public int skillLv3;
         public int treasureDeviceLv1;
 
+        public int createdAt;
+        public DateTime Obtained {
+            get {
+                DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(createdAt);
+                return dateTimeOffset.DateTime;
+            }
+        }
+
         public override string ToString() {
             return $"Lv. {lv}, ATK {atk} (includes {adjustAtk * 10} from fous), NP {treasureDeviceLv1}, Skills {skillLv1} {skillLv2} {skillLv3}";
         }
+    }
+
+    public class ServantCollectionItem {
+        public int svtId;
+
+        public int friendshipRank;
     }
 }

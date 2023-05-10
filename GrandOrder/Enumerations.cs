@@ -21,6 +21,7 @@
         beastUnknown = 27,
         pretender = 28,
         beastIV = 29,
+        beast = 33,
         unknown = 97,
         ALL = 1001
     }
