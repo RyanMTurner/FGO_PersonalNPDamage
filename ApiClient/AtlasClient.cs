@@ -32,4 +32,13 @@ public class AtlasClient : JsonClient {
         return retVal;
     }
 
+    public async Task<QuestDefinition> GetQuest(int id) {
+        string requestPath = $"https://api.atlasacademy.io/nice/JP/quest/{id}";
+
+        var response = await GetAsync(requestPath).ConfigureAwait(false);
+        var deserializedResponse = await DeserializeJsonAsync<QuestDefinition>(response).ConfigureAwait(false);
+
+        return deserializedResponse;
+    }
+
 }

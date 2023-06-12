@@ -114,6 +114,52 @@ namespace FGO_PersonalNPDamage {
             }
             Console.WriteLine($"Finished!");
         }
+
+        public async Task RelatedQuestRequirements(string filePath) {
+            if (!RequireDefinitions()) {
+                return;
+            }
+            using (StreamWriter writer = new StreamWriter(filePath)) {
+                writer.WriteLine("ID\tName\tClass\tRarity\tRelatedQuests\tRequired Ascension\tRequired Bond");
+                foreach (var definition in servantDefinitions) {
+                    List<int> ascensionRequirements = new List<int>();
+                    List<int> bondRequirements = new List<int>();
+                    string ascReq = "None";
+                    string bondReq = "None";
+                    if (definition.relateQuestIds?.Count > 0) {
+                        foreach (int id in definition.relateQuestIds) {
+                            var quest = await client.GetQuest(id);
+                            if (quest?.releaseConditions?.Count > 0) {
+                                foreach (var condition in quest.releaseConditions) {
+                                    if (condition.type == "svtLimit" && !ascensionRequirements.Contains(condition.value)) {
+                                        ascensionRequirements.Add(condition.value);
+                                        if (ascReq == "None") {
+                                            ascReq = condition.value.ToString();
+                                        }
+                                        else {
+                                            ascReq += $", {condition.value}";
+                                        }
+                                    }
+                                    if (condition.type == "svtFriendship" && !bondRequirements.Contains(condition.value)) {
+                                        bondRequirements.Add(condition.value);
+                                        if (bondReq == "None") {
+                                            bondReq = condition.value.ToString();
+                                        }
+                                        else {
+                                            bondReq += $", {condition.value}";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    writer.WriteLine($"{definition.collectionNo}\t{definition.name}\t{definition.className}\t{definition.rarity}\t" +
+                        $"{definition.relateQuestIds?.Count ?? 0}\t{ascReq}\t{bondReq}");
+                }
+            }
+            Console.WriteLine($"Finished!");
+        }
+
         public bool RequireDefinitions() {
             if (servantDefinitions != null) {
                 return true;

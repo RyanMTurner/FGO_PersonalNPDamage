@@ -65,6 +65,12 @@ namespace FGO_PersonalNPDamage {
                         }
                         commandManager.RelatedQuests(input.Substring("relatedquests ".Length, input.Length - "relatedquests ".Length));
                         break;
+                    case "relatedquestrequirements":
+                        if (commandWords.Length == 1) {
+                            continue;
+                        }
+                        commandManager.RelatedQuestRequirements(input.Substring("relatedquestrequirements ".Length, input.Length - "relatedquestrequirements ".Length));
+                        break;
                 }
             }
         }
