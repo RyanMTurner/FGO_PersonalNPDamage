@@ -59,6 +59,12 @@ namespace FGO_PersonalNPDamage {
                         }
                         commandManager.EventAttendance(input.Substring("eventattendance ".Length, input.Length - "eventattendance ".Length));
                         break;
+                    case "relatedquests":
+                        if (commandWords.Length == 1) {
+                            continue;
+                        }
+                        commandManager.RelatedQuests(input.Substring("relatedquests ".Length, input.Length - "relatedquests ".Length));
+                        break;
                 }
             }
         }

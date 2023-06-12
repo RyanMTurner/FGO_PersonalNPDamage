@@ -46,6 +46,8 @@ namespace GrandOrder {
         //appendPassive
         public List<NoblePhantasm> noblePhantasms;
 
+        public List<int> relateQuestIds;
+
         public string alignment {
             get {
                 string retVal = "";

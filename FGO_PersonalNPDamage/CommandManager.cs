@@ -101,6 +101,19 @@ namespace FGO_PersonalNPDamage {
             Console.WriteLine($"Finished!");
         }
 
+        public void RelatedQuests(string filePath) {
+            if (!RequireDefinitions()) {
+                return;
+            }
+            using (StreamWriter writer = new StreamWriter(filePath)) {
+                writer.WriteLine("ID\tName\tClass\tRarity\tRelatedQuests");
+                foreach (var definition in servantDefinitions) {
+                    writer.WriteLine($"{definition.collectionNo}\t{definition.name}\t{definition.className}\t{definition.rarity}\t" +
+                        $"{definition.relateQuestIds?.Count ?? 0}");
+                }
+            }
+            Console.WriteLine($"Finished!");
+        }
         public bool RequireDefinitions() {
             if (servantDefinitions != null) {
                 return true;
